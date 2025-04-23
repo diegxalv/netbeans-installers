@@ -303,7 +303,9 @@ public class Exec {
         }
         System.out.println("Loading Configuration");
         Properties config = new Properties();
-        config.load(Files.newBufferedReader(workingDir.resolve("build.properties")));
+        try (Reader configReader = Files.newBufferedReader(workingDir.resolve("build.properties"))) {
+            config.load(configReader);
+        }
         config.entrySet().stream()
                 .sorted(Comparator.comparing(e -> e.getKey().toString()))
                 .forEach(e -> System.out.println(" - " + e.getKey() + " : " + e.getValue()));
@@ -345,9 +347,8 @@ public class Exec {
         }
 
         String hashFile(Path file) {
-            try {
+            try (InputStream input = Files.newInputStream(file)) {
                 MessageDigest digest = MessageDigest.getInstance(digestAlgo);
-                InputStream input = Files.newInputStream(file);
                 byte[] buffer = new byte[4096];
                 int count;
                 while ((count = input.read(buffer)) != -1) {
