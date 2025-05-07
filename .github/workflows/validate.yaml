@@ -30,7 +30,7 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 23
+          java-version: 21
           distribution: 'zulu'
       - name: Validate configuration
         if: ${{ ! inputs.downloads }}
