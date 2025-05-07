@@ -27,7 +27,7 @@ jobs:
   
   validate:
     name: Validate and cache
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
     name: Build Linux .deb for x86_64
     if: ${{ inputs.build-deb-x64 }}
     needs: validate
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -69,6 +69,8 @@ jobs:
           key: ${{ hashFiles('Exec.java', 'build.properties') }}
           enableCrossOsArchive: true
       - name: Build
+        env:
+          DPKG_DEB_COMPRESSOR_TYPE: xz
         run: java Exec.java build linux x64 deb
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -82,7 +84,7 @@ jobs:
     name: Build Linux .deb for aarch64
     if: ${{ inputs.build-deb-arm }}
     needs: validate
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-24.04-arm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -100,6 +102,8 @@ jobs:
           key: ${{ hashFiles('Exec.java', 'build.properties') }}
           enableCrossOsArchive: true
       - name: Build
+        env:
+          DPKG_DEB_COMPRESSOR_TYPE: xz
         run: java Exec.java build linux arm deb
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -113,7 +117,7 @@ jobs:
     name: Build Linux .rpm for x86_64
     if: ${{ inputs.build-rpm-x64 }}
     needs: validate
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
