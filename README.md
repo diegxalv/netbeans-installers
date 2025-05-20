@@ -1,4 +1,4 @@
-# Apache NetBeans installer builds (in development)
+# Apache NetBeans installer builds
 
 This repository contains the configuration and build system for the
 Friends of Apache NetBeans installers of [Apache NetBeans](https://netbeans.apache.org).
