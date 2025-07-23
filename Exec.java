@@ -53,7 +53,9 @@ public class Exec {
         this.os = os;
         this.arch = arch;
         this.type = type;
-        httpClient = HttpClient.newBuilder().build();
+        httpClient = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
     }
 
     void build() throws Exception {
